@@ -3,15 +3,16 @@ package humanResources;
 import java.io.Serializable;
 
 public class Department implements Serializable {
+    public static final int CountOfElementsInArray = 8;
     private String name;
     private Employee[] employees;
 
     public Department() {
-        this("", 3);
+        this("", CountOfElementsInArray);
     }
 
     public Department(String name) {
-        this(name, 8);
+        this(name, CountOfElementsInArray);
     }
 
     public Department(String name, int k) {

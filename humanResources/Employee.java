@@ -7,14 +7,14 @@ public class Employee implements Serializable {
     private String secondName;
     private String jobTitle;
     private int salary;
-    public static final double SalaryZero = 0;
+    public static final int SalaryZero = 0;
 
     public Employee() {
-        this("", "", "", 0);
+        this("", "", "", SalaryZero);
     }
 
     public Employee(String firstName, String secondName) {
-        this(firstName, secondName, "", 0);
+        this(firstName, secondName, "", SalaryZero);
     }
 
     public Employee(String firstName, String secondName, String jobTitle, int salary) {

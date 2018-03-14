@@ -4,18 +4,19 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Organization implements Serializable {
+    public static final int CountOfElementsInArray = 8;
     private String name;
     private Department[] departments;
 
     public Organization() {
-        this("", 3);
+        this("", CountOfElementsInArray);
     }
 
     ;
 
     public Organization(String name) {
         this.name = name;
-        departments = new Department[8];
+        departments = new Department[CountOfElementsInArray];
     }
 
     public Organization(String name, int k) {

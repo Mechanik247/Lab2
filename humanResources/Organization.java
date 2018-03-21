@@ -1,6 +1,6 @@
 package humanResources;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.Scanner;
 
 public class Organization implements Serializable {
@@ -12,7 +12,7 @@ public class Organization implements Serializable {
         this("", CountOfElementsInArray);
     }
 
-    ;
+
 
     public Organization(String name) {
         this.name = name;
@@ -29,8 +29,7 @@ public class Organization implements Serializable {
         this.departments = departments;
     }
 
-    public void AddEmployToOrganization()
-    {
+    public void AddEmployToOrganization() {
         Scanner k = new Scanner(System.in);
         int check = 0;
         Employee e = new Employee();
@@ -47,19 +46,18 @@ public class Organization implements Serializable {
         String nameDep = k.next();
         for (int i = 0; i < getDepartments().length; i++) {
             if (getDepartments()[i] != null && getDepartments()[i].getName().equals(nameDep)) {
-                getDepartments()[i].add(e);
+                departments[i].add(e);
                 check++;
             }
         }
         if (check == 0) {
             d.setName(nameDep);
             d.add(e);
-            AddDep(d);
+            add(d);
         }
     }
 
-    public void PrintArrayOfEmployes()
-    {
+    public void PrintArrayOfEmployes() {
         System.out.println("Организация - " + getName());
         for (int i = 0; i < getDepartments().length; i++) {
             int y = 1;
@@ -79,15 +77,15 @@ public class Organization implements Serializable {
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void AddDep(Department dep) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void add(Department dep) {
         int k = departments.length;
         boolean checkExistNull = false;
         for (int i = 0; i < departments.length; i++) {
@@ -177,7 +175,7 @@ public class Organization implements Serializable {
         else System.out.println("Сотрудник не найден");
     }
 
-    public Department getLinkDepartment(String name, Department[] departments) {
+    public Department getDepartment(String name, Department[] departments) {
         Department dep = new Department();
         for (int i = 0; i < departments.length; i++) {
             if (departments[i] != null && departments[i].getName() == name) {
@@ -203,7 +201,7 @@ public class Organization implements Serializable {
         return k;
     }
 
-    public int sizeEmployeesInOrganizationHaveJobTitle(String jTitle) {
+    public int getEmployeesCountByJobTitle(String jTitle) {
         int k = 0;
         for (int i = 0; i < departments.length; i++) {
             for (int j = 0; j < departments[i].getEmployees().length; j++) {
@@ -215,7 +213,7 @@ public class Organization implements Serializable {
         return k;
     }
 
-    public Employee EmployHaveMaxSalary(Department[] departments) {
+    public Employee bestEmployee(Department[] departments) {
         int ki = 0, kj = 0, max = 0;
         for (int i = 0; i < departments.length; i++) {
             for (int j = 0; j < departments[i].getEmployees().length; j++) {

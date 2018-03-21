@@ -3,10 +3,13 @@ package humanResources;
 import java.io.Serializable;
 
 public class Department implements Serializable {
+    //todo: такая же фигня как и в емплоях
     public static final int CountOfElementsInArray = 8;
     private String name;
     private Employee[] employees;
+    private int size;
 
+    //todo: и здесь тоже
     public Department() {
         this("", CountOfElementsInArray);
     }
@@ -15,9 +18,11 @@ public class Department implements Serializable {
         this(name, CountOfElementsInArray);
     }
 
+    //todo: к - тоже не лучшее имя для параметра
     public Department(String name, int k) {
         this.name = name;
         employees = new Employee[k];
+        this.size=0;
     }
 
     public Department(String name, Employee[] employees) {
@@ -33,6 +38,7 @@ public class Department implements Serializable {
         this.name = name;
     }
 
+//todo: refact
     public void add(Employee employee) {
         int k = employees.length;
         boolean checkExistNull = false;
@@ -55,7 +61,7 @@ public class Department implements Serializable {
         }
     }
 
-    public boolean Remove(String fName, String sName) {
+    public boolean remove(String fName, String sName) {
         int k = 0;
         for (int i = 0; i < employees.length; i++) {
             if (employees[i].getFirstName() == fName && employees[i].getSecondName() == sName) {
@@ -74,15 +80,15 @@ public class Department implements Serializable {
         else return false;
     }
 
-    public int Size() {
-        return employees.length;
+    public int size() {
+        return this.size;
     }
 
     public Employee[] getEmployees() {
         return employees;
     }
 
-    public Employee[] getEmployeesWithTitle(String jTitle) {
+    public Employee[] getEmployeesByTitle(String jTitle) {
         int p = employees.length;
         int r = 0;
         Employee[] temp = new Employee[p];
@@ -95,7 +101,7 @@ public class Department implements Serializable {
         return temp;
     }
 
-    public Employee[] ArraySortOnSalary(Employee[] employees) {
+    public Employee[] getSortedEmployeesBySalary(Employee[] employees) {
         Employee temp = new Employee();
         for (int j = 0; j < employees.length; j++) {
             for (int k = 0; k < employees.length - 1; k++) {

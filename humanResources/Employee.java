@@ -1,11 +1,10 @@
 package humanResources;
 
-import java.io.Serializable;
-
-public class Employee implements Serializable {
+public class Employee {
     //todo: константы именуются капсом, слова разделяются подчеркиванием, имя этой константы хреновенькое.
     //todo: оно не отображает смысловое назначение константы
-    public static final int SalaryZero = 0;
+    public static final int DEFAULT_SALARY = 0;
+    public static final String DEFAULT_NAME = "";
     private String firstName;
     private String secondName;
     private String jobTitle;
@@ -13,11 +12,11 @@ public class Employee implements Serializable {
 
     //todo: дефолтные строковые значения тоже должны выноситься в константы
     public Employee() {
-        this("", "", "", SalaryZero);
+        this(DEFAULT_NAME, DEFAULT_NAME, DEFAULT_NAME, DEFAULT_SALARY);
     }
 
     public Employee(String firstName, String secondName) {
-        this(firstName, secondName, "", SalaryZero);
+        this(firstName, secondName, DEFAULT_NAME, DEFAULT_SALARY);
     }
 
     public Employee(String firstName, String secondName, String jobTitle, int salary) {

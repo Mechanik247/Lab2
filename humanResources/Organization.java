@@ -1,6 +1,7 @@
 package humanResources;
 
 public class Organization {
+    //TODO: если константы нигде не исплользуются, кроме этого класса, то лучше их делать приватными.
     public static final int DEFAULT_SIZE_OF_ARRAY = 8;
     public static final String DEFAULT_NAME = "";
     private String name;

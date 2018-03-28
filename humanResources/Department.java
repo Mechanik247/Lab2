@@ -21,6 +21,7 @@ public class Department {
     public Department(String name, int size) {
         this.name = name;
         employees = new Employee[size];
+        //TODO: это ты кому оставил?
         this.size=0;
     }
 
@@ -77,9 +78,13 @@ public class Department {
         return employeesTemp;
     }
 
+
     public Employee[] getEmployeesByTitle(String jTitle) {
+        //TODO: зачем?
         int lengthArray = employees.length;
+        //TODO: так себе имя
         int tempSize = 0;
+        //TODO: и это
         Employee[] temp = new Employee[lengthArray];
         for (int i = 0; i < lengthArray; i++) {
             if (employees[i].getJobTitle().equals(jTitle)) {
@@ -87,10 +92,12 @@ public class Department {
                 tempSize++;
             }
         }
+        //TODO: а обрезать массив кто будет?
         return temp;
     }
 
     public Employee[] getSortedEmployeesBySalary() {
+        //TODO: бесполезная инициализация
         Employee temp = new Employee();
         Employee[] tempSortedArray = new Employee[size];
         System.arraycopy(employees, 0, tempSortedArray, 0, size);

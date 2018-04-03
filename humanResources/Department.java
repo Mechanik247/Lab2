@@ -69,9 +69,7 @@ public class Department {
     }
 
     public Employee[] getEmployees() {
-        Employee[] employeesTemp = new Employee[size];
-        System.arraycopy(employees, 0, employeesTemp, 0, size);
-        return employeesTemp;
+        return employees;
     }
 
     public Employee[] getEmployeesByTitle(String jTitle) {

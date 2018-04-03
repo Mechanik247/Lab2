@@ -1,14 +1,13 @@
 package humanResources;
 
 public class Department {
-    //todo: такая же фигня как и в емплоях
     public static final int DEFAULT_SIZE_OF_ARRAY = 8;
+    public static final int DEFAULT_SIZE = 0;
     public static final String DEFAULT_NAME = "";
     private String name;
     private Employee[] employees;
     private int size;
 
-    //todo: и здесь тоже
     public Department() {
         this(DEFAULT_NAME, DEFAULT_SIZE_OF_ARRAY);
     }
@@ -17,17 +16,16 @@ public class Department {
         this(name, DEFAULT_SIZE_OF_ARRAY);
     }
 
-    //todo: к - тоже не лучшее имя для параметра
     public Department(String name, int size) {
         this.name = name;
         employees = new Employee[size];
-        //TODO: это ты кому оставил?
-        this.size=0;
+        this.size = DEFAULT_SIZE;
     }
 
     public Department(String name, Employee[] employees) {
         this.name = name;
         this.employees = employees;
+        this.size = employees.length;
     }
 
     public String getName() {
@@ -38,7 +36,6 @@ public class Department {
         this.name = name;
     }
 
-    //todo: refact
     public void add(Employee employee) {
         if(size == employees.length)
         {
@@ -55,13 +52,12 @@ public class Department {
     }
 
     public boolean remove(String fName, String sName) {
-        int sizeEmployees = employees.length;
-        for (int i = 0; i < sizeEmployees; i++) {
-            if (employees[i] != null && employees[i].getFirstName().equals(fName) && employees[i].getSecondName().equals(sName)) {
+        for (int i = 0; i < this.size; i++) {
+            if (employees[i].getFirstName().equals(fName) && employees[i].getSecondName().equals(sName)) {
                 employees[i] = null;
-                System.arraycopy(employees, i + 1, employees, i, sizeEmployees - (i + 1));
-                employees[sizeEmployees - 1] = null;
-                size--;
+                System.arraycopy(employees, i + 1, employees, i, size - (i + 1));
+                employees[size - 1] = null;
+                this.size--;
                 return true;
             }
         }
@@ -78,31 +74,26 @@ public class Department {
         return employeesTemp;
     }
 
-
     public Employee[] getEmployeesByTitle(String jTitle) {
-        //TODO: зачем?
-        int lengthArray = employees.length;
-        //TODO: так себе имя
-        int tempSize = 0;
-        //TODO: и это
-        Employee[] temp = new Employee[lengthArray];
-        for (int i = 0; i < lengthArray; i++) {
+        int size1 = 0;
+        Employee[] employees1 = new Employee[size];
+        for (int i = 0; i < size; i++) {
             if (employees[i].getJobTitle().equals(jTitle)) {
-                temp[tempSize] = employees[i];
-                tempSize++;
+                employees1[size1] = employees[i];
+                size1++;
             }
         }
-        //TODO: а обрезать массив кто будет?
-        return temp;
+        Employee[] employees2 = new Employee[size1];
+        System.arraycopy(employees1, 0, employees2, 0, size1);
+        return employees2;
     }
 
     public Employee[] getSortedEmployeesBySalary() {
-        //TODO: бесполезная инициализация
-        Employee temp = new Employee();
+        Employee temp;
         Employee[] tempSortedArray = new Employee[size];
         System.arraycopy(employees, 0, tempSortedArray, 0, size);
-        for (int j = 0; j < tempSortedArray.length; j++) {
-            for (int k = 0; k < tempSortedArray.length - 1; k++) {
+        for (int j = 0; j < size; j++) {
+            for (int k = 0; k < size - 1; k++) {
                 if (tempSortedArray[k].getSalary() > tempSortedArray[k + 1].getSalary()) {
                     temp = tempSortedArray[k];
                     tempSortedArray[k] = tempSortedArray[k + 1];

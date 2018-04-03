@@ -54,13 +54,7 @@ public class Organization {
     }
 
     public void removeDep(String name) {
-        if(departments[size].getName().equals(name))
-        {
-            departments[size] = null;
-            size--;
-        }
-        else {
-            for (int i = 0; i < size - 1; i++) {
+            for (int i = 0; i < size; i++) {
                 if (departments[i].getName().equals(name)) {
                     departments[i] = null;
                     System.arraycopy(departments, i + 1, departments, i, size - (i + 1));
@@ -68,7 +62,6 @@ public class Organization {
                     size--;
                 }
             }
-        }
     }
 
     public Department getDepartment(String name) {

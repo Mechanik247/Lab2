@@ -1,9 +1,9 @@
 package humanResources;
 
 public class Organization {
-    //TODO: если константы нигде не исплользуются, кроме этого класса, то лучше их делать приватными.
-    public static final int DEFAULT_SIZE_OF_ARRAY = 8;
-    public static final String DEFAULT_NAME = "";
+    private static final int DEFAULT_SIZE_OF_ARRAY = 8;
+    public static final int DEFAULT_SIZE = 0;
+    private static final String DEFAULT_NAME = "";
     private String name;
     private Department[] departments;
     private int size;
@@ -13,6 +13,7 @@ public class Organization {
     }
 
 
+
     public Organization(String name) {
         this(name, DEFAULT_SIZE_OF_ARRAY);
     }
@@ -20,19 +21,13 @@ public class Organization {
     public Organization(String name, int size) {
         this.name = name;
         departments = new Department[size];
-        //TODO:  тоже самое, кому это оставил?
-        this.size = 0;
+        this.size = DEFAULT_SIZE;
     }
 
     public Organization(String name, Department[] departments) {
         this.name = name;
         this.departments = departments;
-        //TODO:  и здесь
-        this.size = 0;
-        //TODO: лучше полагайся на то, что тебе передали массив департаментов без null-ов
-        for (int i = 0; i < departments.length; i++) {
-            if (departments[i] != null) this.size++;
-        }
+        this.size = departments.length;
     }
 
     public String getName() {
@@ -44,36 +39,41 @@ public class Organization {
     }
 
     public void add(Department dep) {
-        if (size == departments.length) {
+        if(size == departments.length)
+        {
             Department[] departmentsTemp = new Department[size * 2];
             System.arraycopy(departments, 0, departmentsTemp, 0, size);
             departments = departmentsTemp;
             departments[size] = dep;
             size++;
-        } else {
+        }
+        else {
             departments[size] = dep;
             size++;
         }
     }
 
-    //TODO: про конвенции забыл
-    public void RemoveDep(String name) {
-        //TODO: я ж вроде говорил, так себе имя для переменной
-        int k = departments.length;
-        for (int i = 0; i < departments.length; i++) {
-            //TODO: ходил бы до size'а, не нужно было бы проверять на null
-            if (departments[i] != null && departments[i].getName().equals(name)) {
-                departments[i] = null;
-                System.arraycopy(departments, i + 1, departments, i, k - (i + 1));
-                departments[k - 1] = null;
+    public void removeDep(String name) {
+        if(departments[size].getName().equals(name))
+        {
+            departments[size] = null;
+            size--;
+        }
+        else {
+            for (int i = 0; i < size - 1; i++) {
+                if (departments[i].getName().equals(name)) {
+                    departments[i] = null;
+                    System.arraycopy(departments, i + 1, departments, i, size - (i + 1));
+                    departments[size - 1] = null;
+                    size--;
+                }
             }
         }
     }
 
     public Department getDepartment(String name) {
-        for (int i = 0; i < departments.length; i++) {
-            //TODO: то же самое, ходи до size
-            if (departments[i] != null && departments[i].getName().equals(name)) {
+        for (int i = 0; i < size; i++) {
+            if (departments[i].getName().equals(name)) {
                 return departments[i];
             }
         }
@@ -84,40 +84,28 @@ public class Organization {
         return departments;
     }
 
-    //TODO: а приватный size тебе для чего?
     public int amountDepartments() {
-        int size = 0;
-        for (int i = 0; i < departments.length; i++) {
-            if (departments[i] != null) size++;
-        }
         return size;
     }
 
-    //TODO: имя можно и проще сделать
-    public int amountEmployeesInOrganization() {
-        int amount = 0;
-        for (int i = 0; i < departments.length; i++) { //TODO: то же самое
-            if (departments[i] != null) {
-                for (int j = 0; j < departments[i].getEmployees().length; j++) {
-                    if (departments[i].getEmployees()[j] != null) {
-                        amount++;
-                    }
-                }
-            }
+    public int countAllEmployees() {
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            count += departments[i].size();
         }
-        return amount;
+        return count;
     }
 
-    public int getAmountEmployeesByJobTitle(String jTitle) {
+    public int amountEmployeesByJobTitle(String jTitle) {
         int amount = 0;
         Employee employee;
-        for (int i = 0; i < departments.length; i++) { //TODO: и здесь
-            if (departments[i] != null) {
-                for (int j = 0; j < departments[i].getEmployees().length; j++) {
-                    employee = departments[i].getEmployees()[j];
-                    if (employee != null && employee.getJobTitle().equals(jTitle)) {
-                        amount++;
-                    }
+        Department department;
+        for (int i = 0; i < size; i++) {
+            department = departments[i];
+            for (int j = 0; j < department.size(); j++) {
+                employee = department.getEmployees()[j];
+                if (employee.getJobTitle().equals(jTitle)) {
+                    amount++;
                 }
             }
         }
@@ -127,32 +115,34 @@ public class Organization {
     public Employee bestEmployee() {
         int maxSalary = 0;
         Employee employee, employee1 = new Employee();
-        for (int i = 0; i < departments.length; i++) { //TODO: и здесь
-            if (departments[i] != null) {
-                for (int j = 0; j < departments[i].getEmployees().length; j++) {
-                    employee = departments[i].getEmployees()[j];
-                    if (employee != null && employee.getSalary() > maxSalary) { //TODO: ты уже вызываешь метод, который не должен возвращать null-ы в массиве. Проверка не нужна.
-                        maxSalary = employee.getSalary();
-                        employee1 = employee;
-                    }
+        Department department;
+        for (int i = 0; i < size; i++) {
+            department = departments[i];
+            for (int j = 0; j < department.size(); j++) {
+                employee = department.getEmployees()[j];
+                if (employee.getSalary() > maxSalary) {
+                    maxSalary = employee.getSalary();
+                    employee1 = employee;
                 }
             }
         }
         return employee1;
     }
 
-    //TODO: именование дерьмо
-    public Department departmentHaveEmploy(String fName, String sName) {
+    public Department getDepartmentOfAnEmployee(String fName, String sName) {
         Employee employee;
-        for (int i = 0; i < departments.length; i++) {//TODO:  ...
-            if (departments[i] != null) {
-                for (int j = 0; j < departments[i].getEmployees().length; j++) { //TODO:  ...
-                    employee = departments[i].getEmployees()[j];
-                    if (employee != null && employee.getFirstName().equals(fName) && employee.getSecondName().equals(sName)) {
+        Department department;
+        for (int i = 0; i < size; i++)
+        {
+            department = departments[i];
+                for (int j = 0; j < department.size(); j++)
+                {
+                    employee = department.getEmployees()[j];
+                    if (employee.getFirstName().equals(fName) && employee.getSecondName().equals(sName))
+                    {
                         return departments[i];
                     }
                 }
-            }
         }
         return null;
     }

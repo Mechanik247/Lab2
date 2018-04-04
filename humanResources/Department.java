@@ -52,20 +52,29 @@ public class Department {
     }
 
     public boolean remove(String fName, String sName) {
-        for (int i = 0; i < this.size; i++) {
-            if (employees[i].getFirstName().equals(fName) && employees[i].getSecondName().equals(sName)) {
-                employees[i] = null;
-                System.arraycopy(employees, i + 1, employees, i, size - (i + 1));
-                employees[size - 1] = null;
-                this.size--;
-                return true;
+        int length = employees.length;
+        if(employees[length - 1].getFirstName().equals(fName) && employees[length - 1].getSecondName().equals(sName))
+        {
+            employees[length - 1] = null;
+            size--;
+            return true;
+        }
+        else {
+            for (int i = 0; i < size - 1; i++) {
+                if (employees[i].getFirstName().equals(fName) && employees[i].getSecondName().equals(sName)) {
+                    employees[i] = null;
+                    System.arraycopy(employees, i + 1, employees, i, size - (i + 1));
+                    employees[size - 1] = null;
+                    size--;
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public int size() {
-        return this.size;
+        return size;
     }
 
     public Employee[] getEmployees() {
